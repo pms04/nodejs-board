@@ -4,32 +4,167 @@
     <meta charset="UTF-8">
     <title>Simple 게시판 목록</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; }
-        h1 { text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        .left { text-align: left; }
-        .search-area { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .pagination { margin-top: 20px; text-align: center; }
-        .pagination a { padding: 5px 10px; margin: 0 2px; border: 1px solid #ddd; text-decoration: none; }
-        .pagination a.active { background-color: #007bff; color: white; border-color: #007bff; }
-        .write-button { float: right; margin-bottom: 10px; }
-        .write-button a { padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+        /* S.Jobs Philosophy: Simplicity, Clarity, Focus */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            padding: 0;
+            margin: 0;
+            background-color: #f7f7f7; 
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: #ffffff; 
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #111;
+            margin-bottom: 30px;
+            font-weight: 300; 
+            letter-spacing: -0.5px;
+        }
+
+        a {
+            color: #007aff; 
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        /* 💡 [추가] 인증 상태 표시 스타일 */
+        .auth-status {
+            text-align: right; 
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+
+        .search-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        button[type="submit"], .write-button a {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+
+        /* 새 글 작성 버튼 스타일 */
+        .write-button a {
+            background-color: #28a745;
+            color: white;
+        }
+        .write-button a:hover {
+            background-color: #1e873a;
+        }
+        .search-area button[type="submit"] {
+            background-color: #555;
+            color: white;
+        }
+        .search-area button[type="submit"]:hover {
+            background-color: #333;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee; 
+        }
+        th {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: #333;
+        }
+        td:first-child, td:last-child {
+            text-align: center;
+        }
+        td.left {
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        /* 페이지네이션 */
+        .pagination { 
+            text-align: center; 
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        .pagination a {
+            padding: 8px 14px;
+            margin: 0 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .pagination a.active {
+            background-color: #007aff;
+            color: white;
+            border-color: #007aff;
+        }
+        .pagination a:not(.active):hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="auth-status">
+            <% if (isLoggedIn) { %>
+                <span style="font-weight: bold;">환영합니다, <%= user.username %>님!</span>
+                <a href="/logout" style="margin-left: 10px;">로그아웃</a>
+            <% } else { %>
+                <a href="/login" style="margin-right: 10px;">로그인</a>
+                <a href="/signup">회원가입</a>
+            <% } %>
+        </div>
+        
         <h1>자유 게시판</h1>
 
         <div class="search-area">
-            <form action="/" method="GET" style="display: inline-flex;">
+            <form action="/board" method="GET" style="display: inline-flex;">
                 <input type="text" name="search" placeholder="제목 검색" value="<%= search %>">
                 <button type="submit">검색</button>
             </form>
             <div class="write-button">
-                <a href="/write">새 글 작성</a>
+                <a href="/board/write">새 글 작성</a>
             </div>
         </div>
 
@@ -53,7 +188,7 @@
                         <tr>
                             <td><%= post.id %></td>
                             <td class="left">
-                                <a href="/<%= post.id %>"><%= post.title %></a>
+                                <a href="/board/<%= post.id %>"><%= post.title %></a>
                             </td>
                             <td><%= post.author %></td>
                             <td><%= post.created_at.toISOString().split('T')[0] %></td>
@@ -67,7 +202,7 @@
         <div class="pagination">
             <% for (let i = 1; i <= totalPages; i++) { %>
                 <a 
-                    href="/?page=<%= i %><% if (search) { %>&search=<%= search %><% } %>"
+                    href="/board?page=<%= i %><% if (search) { %>&search=<%= search %><% } %>"
                     class="<%= i === currentPage ? 'active' : '' %>"
                 >
                     <%= i %>

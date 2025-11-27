@@ -28,6 +28,18 @@ CREATE TABLE IF NOT EXISTS posts (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+drop table users;
+drop table posts;
+
+
 -- 3. 테스트 데이터 삽입 (선택 사항)
 INSERT INTO posts (title, content, author) VALUES 
 ('환영합니다', '단순하고 깔끔한 게시판입니다.', 'Admin'),
