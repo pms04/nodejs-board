@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title><%= post ? '게시물 수정' : '새 글 작성' %></title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        h1 { text-align: center; }
+        form div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        textarea { resize: vertical; min-height: 200px; }
+        .actions { text-align: right; margin-top: 20px; }
+        .actions button { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; margin-left: 10px; }
+        .actions button[type="submit"] { background-color: #28a745; }
+        .actions a { padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><%= post ? '게시물 수정' : '새 글 작성' %></h1>
+        
+        <form action="/<%= post ? 'edit/' + post.id : 'write' %>" method="POST">
+            <div>
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" value="<%= post ? post.title : '' %>" required>
+            </div>
+            
+            <div>
+                <label for="author">작성자</label>
+                <input type="text" id="author" name="author" value="<%= post ? post.author : '' %>" required>
+            </div>
+            
+            <div>
+                <label for="content">내용</label>
+                <textarea id="content" name="content" required><%= post ? post.content : '' %></textarea>
+            </div>
+            
+            <div class="actions">
+                <a href="<%= post ? '/' + post.id : '/' %>">취소</a>
+                <button type="submit">
+                    <%= post ? '수정 완료' : '등록' %>
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+/* S.Jobs Philosophy: Simplicity, Clarity, Focus */
+
+/* 기본 설정 */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* 명료하고 깨끗한 폰트 */
+    padding: 0;
+    margin: 0;
+    background-color: #f7f7f7; /* 은은한 흰색 배경 */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #ffffff; /* 컨테이너는 순백색 */
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 미세한 그림자로 입체감만 부여 */
+    border-radius: 8px;
+}
+
+/* 제목 및 헤더 */
+h1 {
+    text-align: center;
+    color: #111;
+    margin-bottom: 30px;
+    font-weight: 300; /* 가볍고 명료하게 */
+    letter-spacing: -0.5px;
+}
+
+/* 링크 및 버튼 (강력한 대비) */
+a {
+    color: #007aff; /* Apple의 시그니처 블루 */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* -------------------- 목록 스타일 (list.ejs) -------------------- */
+.search-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+input[type="text"], textarea {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+button[type="submit"], .actions a, .write-button a {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+/* 새 글 작성 버튼 스타일 */
+.write-button a {
+    background-color: #28a745;
+    color: white;
+}
+.write-button a:hover {
+    background-color: #1e873a;
+}
+.search-area button[type="submit"] {
+    background-color: #555;
+    color: white;
+}
+.search-area button[type="submit"]:hover {
+    background-color: #333;
+}
+
+/* 테이블 스타일 (Focus on Content) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee; /* 최소한의 구분선 */
+}
+th {
+    background-color: #fafafa;
+    font-weight: 600;
+    color: #333;
+}
+td:first-child, td:last-child {
+    text-align: center;
+}
+td.left {
+    text-align: left;
+}
+tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* 페이지네이션 */
+.pagination { 
+    text-align: center; 
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+.pagination a {
+    padding: 8px 14px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.pagination a.active {
+    background-color: #007aff;
+    color: white;
+    border-color: #007aff;
+}
+.pagination a:not(.active):hover {
+    background-color: #f0f0f0;
+}
+
+
+/* -------------------- 상세/작성 스타일 (detail.ejs, write.ejs) -------------------- */
+.post-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+.post-header h2 { 
+    margin: 0 0 5px 0; 
+    color: #111;
+    font-weight: 400;
+}
+.post-meta { 
+    font-size: 0.85em; 
+    color: #666; 
+}
+.post-content { 
+    padding: 20px; 
+    min-height: 200px; 
+    white-space: pre-wrap; 
+    background-color: #fcfcfc; 
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+/* 폼 스타일 */
+form div { margin-bottom: 20px; }
+label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 600; 
+    color: #333;
+}
+textarea { 
+    resize: vertical; 
+    min-height: 300px;
+}
+
+/* 액션 버튼 그룹 */
+.actions { 
+    margin-top: 30px; 
+    text-align: right; 
+    display: flex;
+    justify-content: space-between;
+}
+.actions .left-group {
+    float: left;
+}
+.actions .right-group {
+    float: right;
+}
+
+.actions a.list { background-color: #6c757d; }
+.actions a.edit { background-color: #007aff; }
+.actions button.delete { background-color: #dc3545; }
+
+.actions a:hover { opacity: 0.85; }
+.actions button:hover { opacity: 0.85; }

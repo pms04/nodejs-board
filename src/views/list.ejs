@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple 게시판 목록</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .left { text-align: left; }
+        .search-area { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .pagination { margin-top: 20px; text-align: center; }
+        .pagination a { padding: 5px 10px; margin: 0 2px; border: 1px solid #ddd; text-decoration: none; }
+        .pagination a.active { background-color: #007bff; color: white; border-color: #007bff; }
+        .write-button { float: right; margin-bottom: 10px; }
+        .write-button a { padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>자유 게시판</h1>
+
+        <div class="search-area">
+            <form action="/" method="GET" style="display: inline-flex;">
+                <input type="text" name="search" placeholder="제목 검색" value="<%= search %>">
+                <button type="submit">검색</button>
+            </form>
+            <div class="write-button">
+                <a href="/write">새 글 작성</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">번호</th>
+                    <th style="width: 50%;">제목</th>
+                    <th style="width: 15%;">작성자</th>
+                    <th style="width: 15%;">작성일</th>
+                    <th style="width: 10%;">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (posts.length === 0) { %>
+                    <tr>
+                        <td colspan="5">게시물이 없습니다.</td>
+                    </tr>
+                <% } else { %>
+                    <% posts.forEach(post => { %>
+                        <tr>
+                            <td><%= post.id %></td>
+                            <td class="left">
+                                <a href="/<%= post.id %>"><%= post.title %></a>
+                            </td>
+                            <td><%= post.author %></td>
+                            <td><%= post.created_at.toISOString().split('T')[0] %></td>
+                            <td><%= post.views %></td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a 
+                    href="/?page=<%= i %><% if (search) { %>&search=<%= search %><% } %>"
+                    class="<%= i === currentPage ? 'active' : '' %>"
+                >
+                    <%= i %>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
